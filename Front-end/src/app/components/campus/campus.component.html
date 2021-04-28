@@ -1,0 +1,24 @@
+<div class="campus">
+    <h1>{{campus}}</h1>
+    <div class="botones">
+        <div *ngIf="!mostrarAulas">        
+            <a (click)="getMostrarAula(true)" class="botones-campus">Ver Aulas</a>
+        </div>
+        <div *ngIf="mostrarAulas">        
+            <a (click)="getMostrarAula(false)" class="botones-campus">Ocultar Aulas</a>
+        </div>    
+        <a [routerLink]="['/crear-aula', campusId]" class="botones-campus">Crear Aulas</a>
+    </div>
+</div>
+<br/>
+<div *ngIf="mostrarAulas">
+    <div class="aulas" *ngFor="let clase of clases">
+        <div class="clases" *ngFor="let c of clase; let indice=index;">
+            <p class="nombreAula" *ngIf="indice==0;else firstElse"><br/>{{c}}</p>
+            <ng-template #firstElse>
+                <p *ngIf="c=='';else elseBlock"><br/><br/></p>
+                <ng-template #elseBlock><a [routerLink]="['/aula', clase[0], campusId, c]" *ngIf="indice!==0">{{c}}</a></ng-template>
+            </ng-template>
+        </div>
+    </div>
+</div>

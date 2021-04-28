@@ -1,0 +1,20 @@
+<header>
+    <div class="header2"></div>
+    <a [routerLink]="['/']"><img src="../assets/img/urjc.png"/></a>
+</header>
+<div class="menu">
+    <h1>CAMPUS</h1>
+    <p [routerLink]="['/campus/0']" [routerLinkActive]="['actived']">Alcorcón</p>
+    <p [routerLink]="['/campus/1']" [routerLinkActive]="['actived']">Aranjuez</p>
+    <p [routerLink]="['/campus/2']" [routerLinkActive]="['actived']">Fuenlabrada</p>
+    <p [routerLink]="['/campus/3']" [routerLinkActive]="['actived']">Madrid-Manuel Becerra</p>
+    <p [routerLink]="['/campus/4']" [routerLinkActive]="['actived']">Móstoles</p>
+    <p [routerLink]="['/campus/5']" [routerLinkActive]="['actived']">Madrid-Vicálvaro</p>
+</div> 
+<section id="content">
+    <router-outlet></router-outlet>
+</section>
+<div class="clearfix"></div>
+<footer>
+    Rodrigo Mateos &copy; 2020
+</footer>

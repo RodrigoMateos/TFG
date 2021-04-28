@@ -1,0 +1,54 @@
+<div class="formulario">
+    <h1>Crear aula en {{campus}}</h1>
+    <form class="form" [formGroup]="miFormulario" (submit)="onSubmit(miFormulario.value)">
+        <p>
+            <span>Edificio</span>
+            <select name="selectEdificio" formControlName="edificio" (blur)=getPrueba(miFormulario.value.edificio)>
+                <option *ngFor="let edificio of listNombresEdificios" >{{edificio}}</option>
+            </select>
+        </p>
+        <p>
+            <span>Planta</span>
+            <select for="nombre" formControlName="planta">
+                <option *ngFor="let planta of listPlantas">{{planta}}</option>
+            </select>
+        </p>
+        <p>
+            <span for="filas">Filas</span>
+            <input type="number" name="filas" formControlName="filas"/>
+            <span class="class-columna" for="columnas">Columnas</span>
+            <input type="number" name="columnas" formControlName="columnas" />
+        </p>
+        <div *ngIf="miFormulario.value.columnas > 0 ">
+            <div formArrayName="listaFilas">
+                <div class="numColum" *ngFor="let columna of getColumnas(miFormulario.value.columnas);let pointIndex=index" [formGroupName]="pointIndex">
+                    <p class="filas-columnas">
+                        <span for="colum-index">Columnas de la {{columna}} columna: </span>
+                        <input type="number" formControlName="fila"/>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <p>
+            <span class="class-rotos" for="rotos">Asientos Rotos</span>
+            <input type="number" name="rotos" formControlName="rotos" />
+        </p>      
+        <div *ngIf="miFormulario.value.rotos > 0 ">
+            <div formArrayName="listaRotos">
+                <div class="numInh" *ngFor="let columna of getRotos(miFormulario.value.rotos);let pointIndex=index" [formGroupName]="pointIndex">
+                    <p class="sitios-rotos">
+                        <span for="class-columna">Fila: </span>
+                        <input type="number" formControlName="fila"/>
+                        <span for="class-columna">Columna: </span>
+                        <input type="number" formControlName="columna"/>
+                    <!--   <span for="colum-index">Posicion: </span> 
+                        <input type="number" formControlName="posicion"/>  -->
+                    </p>
+                </div>
+            </div>
+        </div>  
+        <input type="submit" value="Enviar"/>
+        <input type="reset" class='boton-reset' value="Limpiar"/>
+    <!--    <button [routerLink]="['/crear-aula', campusId]" class="boton-atras">Atras</button>    -->
+    </form>
+</div>
