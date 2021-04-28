@@ -1,0 +1,20 @@
+<!-- PRUEBA -->
+<div class="pintar-aulas">
+    <h1>Aula {{clase}} {{campus}}</h1>
+    <div class="pizarra">PIZARRA</div>
+    <div class="clase">
+        <div class="filas" *ngFor="let sitio of distribucion;let index">
+            <div class="prueba">
+                <span class="pasillo" *ngIf="sitio==0;else firstElse">&nbsp;&nbsp;P</span>
+                <ng-template #firstElse>
+                    <span class="sitios" *ngFor="let sitio of getPintar(sitio, index)">
+                        <p class="sitios-bueno" *ngIf="sitio==1;else secondElse">1</p>
+                        <ng-template #secondElse>
+                            <p class="sitios-malo">2</p>
+                        </ng-template>
+                    </span>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>
