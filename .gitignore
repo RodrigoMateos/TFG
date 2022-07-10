@@ -2,4 +2,4 @@
 **/.settings
 *.classpath
 *.project
-/subir todo al repo
+.DS*
