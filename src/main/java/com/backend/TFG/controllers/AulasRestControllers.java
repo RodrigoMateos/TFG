@@ -6,11 +6,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.TFG.Beans.BeanAula;
@@ -31,8 +28,8 @@ import ClasesAux.Tipos;
 
 @CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
-@RequestMapping("/aulas")
-public class AulasRestControllers {
+//@RequestMapping("/aulas")
+public class AulasRestControllers implements AulasRest{
 
 	@Autowired
 	private iAulaServices aulasService;
@@ -46,7 +43,7 @@ public class AulasRestControllers {
 	private iRotosServices rotosService;
 	
 	
-	@GetMapping("/listar/{campus}/{id}")
+	//@GetMapping("/listar/{campus}/{id}")
 	public List<Integer> aulasDistribucion(@PathVariable Long campus, @PathVariable Long id){
 		List<Integer> distribucion=new ArrayList<>(); 
 		Aula aula = aulasService.getDistribucionClase(id, campus).get(90);
@@ -62,7 +59,7 @@ public class AulasRestControllers {
 		return distribucion;
 	}
 	
-	@PostMapping("/crearSR/{id}")
+	//@PostMapping("/crearSR/{id}")
 	public List<String> crearAulaServiceV2(@RequestBody BeanAula aulaBody, @PathVariable Long id) throws SQLException {
 		
 		List<String> lista = new ArrayList<String>();
@@ -78,7 +75,7 @@ public class AulasRestControllers {
 	}
 	
 	
-	@PostMapping("/crear/{id}")
+	//@PostMapping("/crear/{id}")
 	public Aula crearAulaService(@RequestBody BeanAula aulaBody, @PathVariable Long id) throws SQLException {
 		
 		Aula aula = crearAula(aulaBody, id); 
@@ -103,7 +100,7 @@ public class AulasRestControllers {
 		return aula;
 	}	
 
-	@GetMapping("/pintar/{nombreCampus}/{idCampus}/{nombreAula}")
+	//@GetMapping("/pintar/{nombreCampus}/{idCampus}/{nombreAula}")
 	public List<List<Integer>> pintarClase(@PathVariable String nombreCampus, @PathVariable String idCampus, @PathVariable String nombreAula) throws SQLException{
 		
 		Integer filas,pasillo1,pasillo2,pasillo3,pasillo4,pasillo5;
@@ -157,7 +154,7 @@ public class AulasRestControllers {
 		return claseList;
 	}
 	
-	@PostMapping("/modificarrotos/{nombreEdificio}/{campusId}/{nombreClase}")
+	//@PostMapping("/modificarrotos/{nombreEdificio}/{campusId}/{nombreClase}")
 	public void modificarRotos(@RequestBody List<List<BeanRotosAux>> rotos, @PathVariable String nombreEdificio, @PathVariable Long campusId, @PathVariable Long nombreClase) throws SQLException {
 		
 		Long id = Long.valueOf(campusId);

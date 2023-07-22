@@ -22,8 +22,7 @@ import com.backend.TFG.model.services.edificio.iEdificioServices;
 
 @CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
-@RequestMapping("/campus")
-public class CampusRestControllers {
+public class CampusRestControllers implements CampusRest{
 
 	@Autowired
 	public iCampusServices campusServices;
@@ -32,17 +31,14 @@ public class CampusRestControllers {
 	@Autowired
 	public iAulaServices aulasServices;
 	
-	@GetMapping("/listar")
 	public List<String> dameCampus(){
 		return campusServices.findAllNames();
 	}
 	
-	@GetMapping("/{id}")
 	public Campus dameCampusById(@PathVariable Long id) {
 		return campusServices.findCampusById(id);
 	}
 	
-	@GetMapping("/listado/{id}")
 	public List<BeanValor> dameCampusCompleto(@PathVariable Long id){
 		
 		List<BeanPlantas> listaPlantaClases = new ArrayList<>();
@@ -68,9 +64,7 @@ public class CampusRestControllers {
 		return listaClases;
 		
 	}
-	
-	
-	@GetMapping("listadoNombre/{id}")
+		
 	public List<String> findNombreEdificiosByCampus(@PathVariable Long id) {
 		List<String> nombres = new ArrayList<>();
 		
@@ -80,7 +74,6 @@ public class CampusRestControllers {
 		return nombres;
 	}
 	
-	@GetMapping("E/{id}")
 	public List<Edificio> findEdificiosByCampus(@PathVariable Long id) {
 		return edificioServices.findEdificiosByCampus(id);
 	}
