@@ -31,8 +31,10 @@ public class AulaServicesImpl implements iAulaServices{
 	@Override
 	public String maxAula(Long campus, Long edificio, Integer planta) {
 		String clase = iAula.findMax(edificio, campus, planta);
-		if (clase == null || clase.isEmpty())
+		if (clase == null || clase.isEmpty()) {
 			return String.valueOf(planta*100);
+		}
+		
 		return clase;
 	}
 

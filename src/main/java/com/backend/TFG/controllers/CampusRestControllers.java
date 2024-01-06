@@ -66,8 +66,9 @@ public class CampusRestControllers implements CampusRest{
 	public List<String> findNombreEdificiosByCampus(@PathVariable Long id) {
 		List<String> nombres = new ArrayList<>();
 		
-		for(Edificio edificio: edificioServices.findEdificiosByCampus(id))
+		for(Edificio edificio: edificioServices.findEdificiosByCampus(id)) {
 			nombres.add(edificio.getNombre());
+		}
 		
 		return nombres;
 	}

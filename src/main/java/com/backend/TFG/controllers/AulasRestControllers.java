@@ -28,7 +28,6 @@ import ClasesAux.Tipos;
 
 @CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
-//@RequestMapping("/aulas")
 public class AulasRestControllers implements AulasRest{
 
 	@Autowired
@@ -43,23 +42,23 @@ public class AulasRestControllers implements AulasRest{
 	private iRotosServices rotosService;
 	
 	
-	//@GetMapping("/listar/{campus}/{id}")
 	public List<Integer> aulasDistribucion(@PathVariable Long campus, @PathVariable Long id){
-		List<Integer> distribucion=new ArrayList<>(); 
+		
+		List<Integer> distribucion=new ArrayList<>();
+		
 		Aula aula = aulasService.getDistribucionClase(id, campus).get(90);
 		List<Integer> pasillo = damePasillos(aula.getEstructura());
 		
-		for(int i=0; i<aula.getColumna();i++)
-			if(!contiene(i, pasillo))
+		for(int i=0; i<aula.getColumna();i++) {
+			if(!contiene(i, pasillo)) {
 				distribucion.add(aula.getFila());
-			else
+			} else {
 				distribucion.add(0);
-		
-
+			}
+		}
 		return distribucion;
 	}
 	
-	//@PostMapping("/crearSR/{id}")
 	public List<String> crearAulaServiceV2(@RequestBody BeanAula aulaBody, @PathVariable Long id) throws SQLException {
 		
 		List<String> lista = new ArrayList<String>();
@@ -75,7 +74,6 @@ public class AulasRestControllers implements AulasRest{
 	}
 	
 	
-	//@PostMapping("/crear/{id}")
 	public Aula crearAulaService(@RequestBody BeanAula aulaBody, @PathVariable Long id) throws SQLException {
 		
 		Aula aula = crearAula(aulaBody, id); 
@@ -100,7 +98,6 @@ public class AulasRestControllers implements AulasRest{
 		return aula;
 	}	
 
-	//@GetMapping("/pintar/{nombreCampus}/{idCampus}/{nombreAula}")
 	public List<List<Integer>> pintarClase(@PathVariable String nombreCampus, @PathVariable String idCampus, @PathVariable String nombreAula) throws SQLException{
 		
 		Integer filas,pasillo1,pasillo2,pasillo3,pasillo4,pasillo5;
@@ -154,7 +151,6 @@ public class AulasRestControllers implements AulasRest{
 		return claseList;
 	}
 	
-	//@PostMapping("/modificarrotos/{nombreEdificio}/{campusId}/{nombreClase}")
 	public void modificarRotos(@RequestBody List<List<BeanRotosAux>> rotos, @PathVariable String nombreEdificio, @PathVariable Long campusId, @PathVariable Long nombreClase) throws SQLException {
 		
 		Long id = Long.valueOf(campusId);
@@ -195,7 +191,6 @@ public class AulasRestControllers implements AulasRest{
 			System.out.println(edificio.toString());
 			
 			return aula;
-
 		
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -228,28 +223,34 @@ public class AulasRestControllers implements AulasRest{
 	}
 	
 	private Integer getColumnas(int columna, Aula clase) {
+		
 		Estructura estructura = estructuraService.findEstructuraById(clase.getEstructura().getId());
 		Integer fila=estructura.getNfilapasillo1();
-		if(columna <= fila)
+		
+		if(columna <= fila) {
 			return columna+1;
+		}
 		
 		fila = fila + estructura.getNfilapasillo2();
 		
-		if(columna <= fila)
+		if(columna <= fila) {
 			return columna;
+		}
 		
 		fila = fila + estructura.getNfilapasillo3();
 		columna--;
 		
-		if(columna <= fila)
+		if(columna <= fila) {
 			return columna;
+		}
 		
 		fila = fila + estructura.getNfilapasillo4();
 		columna--;
 
-		if(columna <= fila)
+		if(columna <= fila) {
 			return columna;
-
+		}
+		
 		return columna-1;
 
 	}
@@ -271,28 +272,38 @@ public class AulasRestControllers implements AulasRest{
 
 		List<Integer> lista = new ArrayList<Integer>();
 		
-		if (pasillo1 != 0)
-			for (int i=0; i<pasillo1;i++) 
+		if (pasillo1 != 0) {
+			for (int i=0; i<pasillo1;i++) {
 				lista.add(0);
+			}
+		}
+		
 		if (pasillo2 != 0) {
 			lista.add(3);
-			for (int i=0; i<pasillo2;i++) 
+			for (int i=0; i<pasillo2;i++) {
 				lista.add(0);
+			}
 		}
+		
 		if (pasillo3 != 0) {
 			lista.add(3);
-			for (int i=0; i<pasillo3;i++) 
+			for (int i=0; i<pasillo3;i++) {
 				lista.add(0);
+			}
 		}
+		
 		if (pasillo4 != 0) {
 			lista.add(3);
-			for (int i=0; i<pasillo4;i++) 
+			for (int i=0; i<pasillo4;i++) {
 				lista.add(0);
+			}
 		}
+		
 		if (pasillo5 != 0){
 			lista.add(3);
-			for (int i=0; i<pasillo5;i++) 
+			for (int i=0; i<pasillo5;i++) {
 				lista.add(0);
+			}
 		}
 
 		return lista;
@@ -303,7 +314,7 @@ public class AulasRestControllers implements AulasRest{
 		List<Integer> prueba=new ArrayList<Integer>();
 		Boolean pasillo=false, buenos=false;
 		
-		for(int i=0;i<prueba2.size();i++)
+		for(int i=0;i<prueba2.size();i++) {
 			if((i==columna || pasillo) && !buenos) {
 				if(prueba2.get(i) == 3) {
 					pasillo=true;
@@ -314,9 +325,11 @@ public class AulasRestControllers implements AulasRest{
 					prueba.add(1);	
 				}
 			}
-			else
+			else {
 				prueba.add(prueba2.get(i));
-
+			}
+		}
+		
 		return prueba;
 	}
 
@@ -324,10 +337,11 @@ public class AulasRestControllers implements AulasRest{
 		
 		List<List<Integer>> listaFinal = new ArrayList<>();
 		for(int i=0;i< prueba.size();i++) {
-			if(i==indiceArray)
+			if(i==indiceArray) {
 				listaFinal.add(prueba2);
-			else
+			}else {
 				listaFinal.add(prueba.get(i));
+			}
 		}
 		
 		return listaFinal;
@@ -335,17 +349,17 @@ public class AulasRestControllers implements AulasRest{
 
 	private Integer dameColumna(Integer columna, Integer pasillo1, Integer pasillo2, Integer pasillo3, Integer pasillo4,Integer pasillo5) {
 		
-		if(columna<pasillo1)
+		if(columna<pasillo1) {
 			return 0;
-		else if(columna<pasillo1+pasillo2)
+		} else if(columna<pasillo1+pasillo2) {
 			return 1;
-		else if(columna<pasillo1+pasillo2+pasillo3)
+		} else if(columna<pasillo1+pasillo2+pasillo3) {
 			return 2;
-		else if(columna<pasillo1+pasillo2+pasillo3+pasillo4)
+		} else if(columna<pasillo1+pasillo2+pasillo3+pasillo4) {
 			return 3;
-		else
+		} else {
 			return 4;
-		
+		}
 	}
 
 	// Devuelve el nombre de la clase que vamos a insertar
@@ -368,39 +382,46 @@ public class AulasRestControllers implements AulasRest{
 	// Inserta la estructura que va a tener la clase a insertar
 	private Estructura rellenarEstructura(Estructura estructura, Integer[] listaFilas) {
 
-		if((listaFilas[0] != 0 || listaFilas[0] != null) && listaFilas.length >= 1)
+		if((listaFilas[0] != 0 || listaFilas[0] != null) && listaFilas.length >= 1) {
 			estructura.setNfilapasillo1(listaFilas[0]);
-		else
+		} else {
 			estructura.setNfilapasillo1(0);
+		}
 		
-		if((listaFilas[1] != 0 || listaFilas[1] != null) && listaFilas.length >= 2)
+		if((listaFilas[1] != 0 || listaFilas[1] != null) && listaFilas.length >= 2) {
 			estructura.setNfilapasillo2(listaFilas[1]);
-		else
+		} else {
 			estructura.setNfilapasillo2(0);
+		}
 		
-		if((listaFilas[2] != 0 || listaFilas[2] != null) && listaFilas.length >= 3)
+		if((listaFilas[2] != 0 || listaFilas[2] != null) && listaFilas.length >= 3) {
 			estructura.setNfilapasillo3(listaFilas[2]);
-		else
+		} else {
 			estructura.setNfilapasillo3(0);
+		}
 		
-		if((listaFilas[3] != 0 || listaFilas[3] != null) && listaFilas.length >= 4)
+		if((listaFilas[3] != 0 || listaFilas[3] != null) && listaFilas.length >= 4) {
 			estructura.setNfilapasillo4(listaFilas[3]);
-		else
+		} else {
 			estructura.setNfilapasillo4(0);
+		}
 		
-		if((listaFilas[4] != 0 || listaFilas[4] != null) && listaFilas.length >= 5)
+		if((listaFilas[4] != 0 || listaFilas[4] != null) && listaFilas.length >= 5) {
 			estructura.setNfilapasillo5(listaFilas[4]);
-		else
+		} else {
 			estructura.setNfilapasillo5(0);
-
+		}
+		
 		return estructura;
 }
 	
 	private boolean contiene(int i, List<Integer> pasillo) {
 		
-		for(Integer in: pasillo)
-			if(in==i)
+		for(Integer in: pasillo) {
+			if(in==i) {
 				return true;
+			}
+		}
 		
 		return false;
 	}
@@ -408,35 +429,41 @@ public class AulasRestControllers implements AulasRest{
 	private List<Integer> damePasillos(Estructura pasillo) {
 		List<Integer> pasillos = new ArrayList<>();
 		
-		if(pasillo.getNfilapasillo1()!=0)
+		if(pasillo.getNfilapasillo1()!=0) {
 			pasillos.add(pasillo.getNfilapasillo1());
-		else
+		} else {
 			return pasillos;
-
-		if(pasillo.getNfilapasillo2()!=0)
+		}
+		
+		if(pasillo.getNfilapasillo2()!=0) {
 			pasillos.add(pasillo.getNfilapasillo2());
-		else
+		} else {
 			return pasillos;
+		}
 		
-		if(pasillo.getNfilapasillo3()!=0)
+		if(pasillo.getNfilapasillo3()!=0) {
 			pasillos.add(pasillo.getNfilapasillo3());
-		else
+		} else {
 			return pasillos;
+		}
 		
-		if(pasillo.getNfilapasillo4()!=0)
+		if(pasillo.getNfilapasillo4()!=0) {
 			pasillos.add(pasillo.getNfilapasillo4());
-		else
+		} else {
 			return pasillos;
+		}
 		
-		if(pasillo.getNfilapasillo5()!=0)
+		if(pasillo.getNfilapasillo5()!=0) {
 			pasillos.add(pasillo.getNfilapasillo5());
-		else
+		} else {
 			return pasillos;
+		}
 		
-		if(pasillo.getNfilapasillo1()!=0)
+		if(pasillo.getNfilapasillo1()!=0) {
 			pasillos.add(pasillo.getNfilapasillo1());
-		else
+		} else {
 			return pasillos;
+		}
 		
 		return pasillos;
 	}

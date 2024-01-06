@@ -31,7 +31,7 @@ public interface AulasRest {
 		@ApiResponse(responseCode = "500", description = "Error interno", content = @Content) })
 	public List<Integer> aulasDistribucion(@PathVariable Long campus, @PathVariable Long id);
 	
-	@PostMapping("/crearSR/{id}")
+	@PostMapping("/crear-aula/{id}/v2")
 	@Operation(summary = "Crea nueva aula.")
 	@ApiResponses(value = {
 		@ApiResponse(responseCode = "200", description = "Crea nuevo aula y la retorna", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Integer.class)) }),
@@ -40,7 +40,7 @@ public interface AulasRest {
 		@ApiResponse(responseCode = "500", description = "Error interno", content = @Content) })
 	public List<String> crearAulaServiceV2(@RequestBody BeanAula aulaBody, @PathVariable Long id) throws SQLException;
 	
-	@PostMapping("/crear/{id}")
+	@PostMapping("/crear-aula/{id}/v1")
 	@Operation(summary = "Crea nueva aula.")
 	@ApiResponses(value = {
 		@ApiResponse(responseCode = "200", description = "Crea nuevo aula y la retorna", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Integer.class)) }),
@@ -49,7 +49,7 @@ public interface AulasRest {
 		@ApiResponse(responseCode = "500", description = "Error interno", content = @Content) })
 	public Aula crearAulaService(@RequestBody BeanAula aulaBody, @PathVariable Long id) throws SQLException;
 	
-	@GetMapping("/pintar/{nombreCampus}/{idCampus}/{nombreAula}")
+	@GetMapping("/pintar-aula/{nombreCampus}/{idCampus}/{nombreAula}/v1")
 	@Operation(summary = "Devuelve la estructura del aula requerida.")
 	@ApiResponses(value = {
 		@ApiResponse(responseCode = "200", description = "Estructura del aula a pintar.", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Integer.class)) }),
@@ -58,7 +58,7 @@ public interface AulasRest {
 		@ApiResponse(responseCode = "500", description = "Error interno", content = @Content) })
 	public List<List<Integer>> pintarClase(@PathVariable String nombreCampus, @PathVariable String idCampus, @PathVariable String nombreAula) throws SQLException;
 	
-	@PostMapping("/modificarrotos/{nombreEdificio}/{campusId}/{nombreClase}")
+	@PostMapping("/modificar-rotos/{nombreEdificio}/{campusId}/{nombreClase}/v1")
 	@Operation(summary = "Inserta la lista de asientos rotos.")
 	@ApiResponses(value = {
 		@ApiResponse(responseCode = "200", description = "Lista de los nuevos asientos rotos del aula", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Integer.class)) }),
